@@ -1,10 +1,10 @@
-# GEN1 Event-based GNN Detector
+# SPAGNet – GEN1 Event-based GNN Detector
 
 **University Project · Technische Hochschule Ingolstadt**
 
 Research-oriented prototype for **object detection on event-based camera data** using a hybrid **Graph Neural Network (GNN) + CNN architecture**.
 
-The project explores how asynchronous event streams can be represented as graphs, processed with **GATv2**, and converted into dense feature maps for object detection.
+SPAGNet explores how asynchronous event streams can be represented as graphs, processed with **GATv2**, and converted into dense feature maps for object detection.
 
 **Focus:** Event-based Vision · GNNs · GATv2 · Object Detection · PyTorch Geometric · GPU Memory Constraints
 
@@ -12,7 +12,7 @@ The project explores how asynchronous event streams can be represented as graphs
 
 ## Architecture Overview
 
-![GEN1 GNN Detector Architecture](fig4_architecture.png)
+![SPAGNet Architecture](./fig4_architecture.png)
 
 The model follows a hybrid processing pipeline:
 
@@ -47,7 +47,7 @@ The GNN processes the irregular event representation, while CNN-based detection 
 
 ## My Contribution
 
-My main contribution was the **design and implementation of the GNN-based detection architecture and training pipeline**.
+My main contribution was the **design and implementation of the GNN-based detection architecture and the associated training pipeline**.
 
 Key areas:
 
@@ -62,7 +62,7 @@ Key areas:
 - Training and validation pipeline
 - Experiment monitoring and analysis
 
-The project gave me practical experience with the interaction between **ML architecture, graph representations and hardware constraints**.
+The project provided practical experience at the intersection of **ML architecture, graph representations and computational constraints**.
 
 ---
 
@@ -70,15 +70,15 @@ The project gave me practical experience with the interaction between **ML archi
 
 ### Event & Graph Representation
 
-The project uses the **Prophesee GEN1 automotive detection dataset**.
+SPAGNet operates on the **Prophesee GEN1 automotive detection dataset**.
 
-Instead of conventional image frames, the input consists of asynchronous events containing:
+Unlike conventional image-based approaches, the input consists of asynchronous events containing:
 
 ```text
 (x, y, timestamp, polarity)
 ```
 
-The events are represented as a graph with neighbourhood relationships between events.
+These events are represented as a graph with neighbourhood relationships between events.
 
 The node encoder uses:
 
@@ -88,7 +88,7 @@ normalized x
 normalized y
 ```
 
-while temporal information is retained in the event/graph representation.
+Temporal information is retained in the event and graph representation.
 
 ---
 
@@ -132,7 +132,7 @@ Stride 8
 Stride 16
 ```
 
-This creates the input for the multi-scale detection heads.
+These feature maps are then processed by the multi-scale detection heads.
 
 ---
 
@@ -140,19 +140,19 @@ This creates the input for the multi-scale detection heads.
 
 Each detection scale uses a lightweight CNN detection head.
 
-The heads predict:
+The detection heads predict:
 
 - bounding box coordinates
 - objectness
 - class probabilities
 
-Predictions from both scales are decoded and combined before applying **Non-Maximum Suppression (NMS)**.
+The predictions from the different scales are decoded and combined before applying **Non-Maximum Suppression (NMS)**.
 
 ---
 
 ## Engineering Challenge: GPU Memory
 
-A major challenge was the size of the event graphs.
+A major engineering challenge was the size of the event graphs.
 
 Preprocessed samples can contain **hundreds of thousands of edges**, with some graphs reaching approximately:
 
@@ -162,7 +162,7 @@ Preprocessed samples can contain **hundreds of thousands of edges**, with some g
 
 Processing such graphs through multiple GATv2 layers creates substantial GPU memory requirements.
 
-To make training feasible, the number of edges is limited:
+To make training feasible, the number of edges is limited through reproducible edge subsampling:
 
 ```text
 ~800k edges
@@ -182,17 +182,17 @@ hidden_dim: 128
 max_edges: 50000
 ```
 
-This introduced an important engineering trade-off between:
+This introduces an important engineering trade-off between:
 
 ```text
 Graph information
-      ↕
+       ↕
 GPU memory
-      ↕
+       ↕
 Computational cost
 ```
 
-This was one of the most interesting aspects of the project from a systems perspective.
+This aspect of the project was particularly relevant from a systems and hardware perspective.
 
 ---
 
@@ -210,9 +210,9 @@ The training setup includes:
 - checkpointing and resume
 - TensorBoard logging
 - Weights & Biases integration
-- training/validation monitoring
+- training and validation monitoring
 
-Simplified pipeline:
+Simplified training pipeline:
 
 ```text
 GEN1 Dataset
@@ -242,7 +242,7 @@ Checkpoint / Logging
 
 The experiments revealed a significant **generalization problem**.
 
-![Training vs Validation Loss](loss_curve.png)
+![Training vs Validation Loss](./loss_curve.png)
 
 The training loss continuously decreases, while the validation loss reaches its minimum very early and subsequently increases.
 
@@ -258,37 +258,39 @@ Validation loss
 
 The best validation loss occurs around **epoch 1**, indicating strong overfitting in this configuration.
 
-Rather than presenting this as a successful benchmark result, I use it as an example of how the architecture was **experimentally evaluated and its limitations analysed**.
+Rather than presenting this as a successful benchmark result, the experiment is useful for demonstrating how the architecture was **evaluated, analysed and iteratively assessed**.
 
 ---
 
 ## Key Takeaways
 
-This project gave me practical experience in:
+This project provided practical experience in:
 
 - designing and implementing a non-trivial GNN architecture
 - working with irregular event-based data
 - combining GNN and CNN processing
-- dealing with large graph structures
+- handling large graph structures
 - analysing GPU memory constraints
 - building a complete training pipeline
 - interpreting training and validation behaviour
 - identifying overfitting and architectural limitations
 
-A key lesson was that **ML architecture and hardware constraints cannot be considered independently**. Graph size, feature dimensions and batch size directly affect memory consumption and computational feasibility.
+A key lesson was that **ML architecture and computational constraints cannot be considered independently**.
+
+Graph size, feature dimensions and batch size directly influence memory consumption and computational feasibility.
 
 ---
 
 ## Technologies
 
-**Machine Learning**
+### Machine Learning
 
 - PyTorch
 - PyTorch Geometric
 - Torch Scatter
 - Torchvision
 
-**Architecture**
+### Architecture
 
 - Graph Neural Networks
 - GATv2
@@ -296,7 +298,7 @@ A key lesson was that **ML architecture and hardware constraints cannot be consi
 - Multi-scale object detection
 - Anchor-based detection
 
-**Training**
+### Training
 
 - AdamW
 - Learning-rate scheduling
@@ -304,7 +306,7 @@ A key lesson was that **ML architecture and hardware constraints cannot be consi
 - TensorBoard
 - Weights & Biases
 
-**Compute**
+### Compute
 
 - NVIDIA GPU
 - CUDA 11.8
@@ -314,7 +316,7 @@ A key lesson was that **ML architecture and hardware constraints cannot be consi
 ## Project Structure
 
 ```text
-GEN1-GNN-Detector/
+SPAGNet/
 │
 ├── README.md
 ├── fig4_architecture.png
@@ -381,7 +383,7 @@ data/
 
 ## Training
 
-After preparing the dataset and configuring `config.yaml`:
+After preparing the dataset and configuring `config.yaml`, training can be started with:
 
 ```bash
 python train.py \
@@ -414,7 +416,7 @@ The implementation builds on concepts from:
 
 **Project Type:** University Project  
 **Institution:** Technische Hochschule Ingolstadt  
-**Topic:** Event-based Object Detection with Graph Neural Networks  
+**Project:** SPAGNet – GEN1 Event-based GNN Detector  
 **Primary Contribution:** GNN architecture and training pipeline
 
-This project was developed as an academic/research-oriented prototype for investigating graph-based processing of event-camera data and its integration with conventional object detection.
+This project was developed as an academic and research-oriented prototype for investigating graph-based processing of event-camera data and its integration with conventional object detection.
