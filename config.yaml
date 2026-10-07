@@ -1,0 +1,20 @@
+# ── Training ──────────────────────────────────────────────────
+run_name:     baseline_gnn_v16_run
+epochs:       18
+batch_size:   4        # mit 25k Nodes pro Sample, mehr crasht VRAM
+num_workers:  2
+seed:         42
+
+# ── Modell ────────────────────────────────────────────────────
+hidden_dim:   128      # 64 zum Testen, 128 für Training
+
+# ── Optimizer ─────────────────────────────────────────────────
+lr:           0.0003
+weight_decay: 0.05
+clip_grad:    1.0
+
+# ── Daten ─────────────────────────────────────────────────────
+max_edges:    50000    # Graph Kanten cap (pkl hat ~800k → zu viel)
+
+# ── Logging ───────────────────────────────────────────────────
+log_every:    20       # alle N Batches loggen
