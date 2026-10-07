@@ -282,12 +282,14 @@ A key lesson was that **ML architecture and hardware constraints cannot be consi
 ## Technologies
 
 **Machine Learning**
+
 - PyTorch
 - PyTorch Geometric
 - Torch Scatter
 - Torchvision
 
 **Architecture**
+
 - Graph Neural Networks
 - GATv2
 - CNNs
@@ -295,6 +297,7 @@ A key lesson was that **ML architecture and hardware constraints cannot be consi
 - Anchor-based detection
 
 **Training**
+
 - AdamW
 - Learning-rate scheduling
 - Gradient clipping
@@ -302,6 +305,7 @@ A key lesson was that **ML architecture and hardware constraints cannot be consi
 - Weights & Biases
 
 **Compute**
+
 - NVIDIA GPU
 - CUDA 11.8
 
