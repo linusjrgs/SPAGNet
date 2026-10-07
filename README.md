@@ -1,6 +1,5 @@
 # SPAGNet – GEN1 Event-based GNN Detector
 
-**Event-based Object Detection with Graph Neural Networks**
 **University Project · Technische Hochschule Ingolstadt**
 
 Research-oriented prototype for **object detection on event-based camera data** using a hybrid **Graph Neural Network (GNN) + CNN architecture**.
